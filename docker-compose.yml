@@ -1,8 +1,8 @@
 version: "3.3"
 services:
-    db:
+    postgresdb:
         image: postgres
-        restart: unless-stopped
+        hostname: postgres-host      
         environment:
             POSTGRES_DATABASE: "db"
             # So you don't have to use root, but you can if you like
@@ -20,6 +20,10 @@ services:
         volumes:
             - my-db-postgres:/var/lib/postgres
             - "/etc/localtime:/etc/localtime:ro"
+        command:
+            - "postgres"
+            - "-c"
+            - "wal_level=logical"
 # Names our volume
 volumes:
     my-db-postgres:
